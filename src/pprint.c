@@ -2135,6 +2135,8 @@ void TY_(PPrintTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node )
             Bool classic  = TidyClassicVS; /* #228 - cfgBool( doc, TidyVertSpace ); */
             uint indprev = indent;
 
+            indent = 0; /* Issue #697 - set this before the flush */
+
             PCondFlushLineSmart( doc, indent ); /* about to add <pre> tag - clear any previous */
 
             /* insert extra newline for classic formatting */
@@ -2145,7 +2147,6 @@ void TY_(PPrintTree)( TidyDocImpl* doc, uint mode, uint indent, Node *node )
 
             PPrintTag( doc, mode, indent, node );   /* add <pre> or <textarea> tag */
 
-            indent = 0;
             /* @camoy Fix #158 - remove inserted newlines in pre - TY_(PFlushLineSmart)( doc, indent ); */
 
             for ( content = node->content; content; content = content->next )
